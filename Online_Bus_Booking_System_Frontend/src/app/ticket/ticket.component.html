@@ -1,0 +1,237 @@
+<div class="card">
+    <div id="downloadPdf">
+        <button (click)="captureScreen()">Download as Pdf</button>
+    </div>
+
+    <div class="ticketContainer" id="printThisTicket">
+        <img class="logo" src="../assets/logo for ticket.png" width="200px" height="200px">
+        <!-- <p>Contact Us. +91 9876 543 210</p>
+        <p>Email: onlinebustravels@gmail.com</p>
+        <p>Registered Corporate Office:PNR House -->
+
+            <!-- R 5 Green Park Market Pune.</p> -->
+            <address style="text-align:right; font-size:large;">
+            Obs Travels Private Limited,<br>
+            Contact No: +91 9876 543 210<br>
+            Email: onlinebustravels@gmail.com<br>
+            Registered Corporate Office: <br>
+            PNR House,<br>
+            R-5 Green Park Market,<br>
+            Pune 411007,<br>
+            Maharastra,<br>
+            India<br>
+            </address>
+        <br>
+        <hr>
+        
+
+        <table class="topBar1">
+            <div class="sourceDest">
+                <tr>
+                    <th>Source City</th>
+                    <th>Destination City</th>
+                    <th>Date Of Journey</th>
+                    <th>Ticket Id</th>
+                </tr>
+            </div>
+            <div class="sourceDestData">
+                <tr>
+                    <td>{{bus?.source}}</td>
+                    <td>{{bus?.destination}}</td>
+                    <td>{{ticket?.travelDate}}</td>
+                    <td>{{ticket?.ticketId}}</td>
+                </tr>
+            </div> 
+        </table>
+
+        <div class="topBar1">
+            <table>
+                <div class="sourceDest">
+                    <tr>
+                        <th>Passenger Name</th>
+                        <th>Seat Number</th>
+                        <th>Age</th>
+                        <th>Passenger Id</th>
+                    </tr>
+                </div>
+                <div class="sourceDestData">
+                    <tr *ngFor="let p of passengerList">
+                        <td>{{p?.passengerName}}</td>
+                        <td>{{p?.seatNo}}</td>
+                        <td>{{p?.passengerAge}}</td>
+                        <td>{{p?.passengerId}}</td>
+                    </tr>
+                </div>
+            </table>
+        </div>
+        <div class="topBar1">
+            <table>
+                <div class="sourceDest">
+                    <tr>
+                        <th>Bus Id</th>
+                        <th>Bus Type</th>
+                        <th>Bus Name</th>
+                        <!-- <th></th> -->
+                    </tr>
+                </div>
+                <div class="sourceDestData">
+                    <tr>
+                        <td>{{bus?.busId}}</td>
+                        <td>{{bus?.typeOfBus}}</td>
+                        <td>{{bus?.busName}}</td>
+                        <!-- <td></td> -->
+                    </tr>
+                </div>
+                
+            </table>
+        </div>
+
+        <div class="topBar1">
+            <table>
+                <div class="sourceDest">
+                    <tr>
+                        <th>Departure Time</th>
+                        <th>Arrivale Time</th>
+                        <th>Total Fare (₹)</th>
+                        <!-- <th></th> -->
+                    </tr>
+                </div>
+                <div class="sourceDestData">
+                    <tr>
+                        <td>{{bus?.timeOfDeparture}}</td>
+                        <td>{{bus?.timeOfArrival}}</td>
+                        <td>{{ticket?.totalAmount}}</td>
+                        <!-- <td></td> -->
+
+                    </tr>
+
+                </div>
+                
+            </table>
+        </div>
+        <div class="topBar1">
+            <article style="text-align:center; font-size:xx-large; padding-bottom: 30px;">Important Guidlines</article>
+        <table>
+            <div class="sourceDest">
+                <tr>
+                    <th>1. Please download and activate the Aarogya Setu app on your phone.</th>
+                    <th>2. Certify your health status through the Aarogya Setu app or the self-declaration form.</th>
+                    <th>3. Please reach at least half hour prior to bus departure.</th>
+                    <th>4. Face masks are compulsory. We urge you to carry your own.</th>
+                </tr>
+            </div>
+            <div class="sourceDestData">
+                <tr>
+                    <td><img src="../assets/Aarogya_Setu_App_Logo.png" style="width: 128px; height: 128px;"></td>
+                    <td><img src="../assets/declaration.png" alt=""></td>
+                    <td><img src="../assets/5257405.png" alt=""></td>
+                    <td><img src="../assets/mask_ticket.png" alt=""></td>
+                </tr>
+            </div>
+        </table> 
+    </div>
+    <div class="Thankyou" style="text-align:center; font-size: xx-large;">
+        <img src="../assets/thank-you.png">
+        <h1>Best wishes for a safe, happy and healthy journey.</h1>
+    </div>
+    <hr>
+    <div class="container-fluid" style="background-image: linear-gradient(to right, #c6ffdd, #fbd786, #f7797d);">
+        <h1 style="color: #434343; size: 10px; text-align: center;margin-bottom: 0px" >Made with❤️in India</h1>   </div>
+     <hr>        
+    </div>
+    <br>
+    <br>
+
+
+
+    <div>
+        <a style="text-decoration: none; color: white;"><button type="submit" (click)="reschedule()" class="signupbtn"
+        class="button" style="margin-right: 40px;">Reschedule</button></a>
+        <a style="text-decoration: none; color: white;" id="myBtn"><button type="button" class="cancelbtn" class="button"
+        (click)="cancelfn()">Cancel</button></a>
+
+    </div>
+</div>
+<div style="margin-top:60px ;"></div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+
+
+        <div *ngIf=" isLoggedIn then loggedIn else notRegistered">
+            <div *ngIf=" isCancelled then cancel else loggedIn">
+
+            </div>
+        </div>
+        <ng-template #loggedIn>
+            <h1 style="margin-left: 20%;">Cancel Ticket</h1>
+
+            <h2>Are you sure you want to cancel your ticket ?</h2>
+            <div id="resultDiv"></div>
+            <div>
+                <br>
+                <button type="button" class="button" [disabled]="isclicked==true" (click)="close()">No</button>
+                <button type="submit" class="button" (click)="cancelFunction()">Yes</button>
+
+                <br><br>
+                <!-- //(click)="close()" -->
+            </div>
+
+        </ng-template>
+        <ng-template #notRegistered>
+            <h1 style="margin-left: 20%;">Cancel Ticket</h1>
+            <!-- <span style="margin-left: 15%;"> -->
+            <h2>Kindly login to cancel your ticket </h2>
+
+            <!-- </span> -->
+            <br>
+            <br>
+            <div class="">
+
+                <a style="text-decoration: none; color: white;"><button type="button"
+          class="button" [routerLink]="['/registerationLink']">Register</button></a>
+                <button type="submit" class="button" [routerLink]="['/loginLink']">Login</button>
+
+                <h3>Not a registered user? Kindly register</h3>
+
+            </div>
+            <br>
+            <br>
+            <br>
+        </ng-template>
+
+        <ng-template #cancel>
+            <h2>Your ticket has been cancelled</h2>
+            <h2>Refund is transferred to your wallet</h2>
+            <br>
+            <a style="text-decoration: none; color: white;" [routerLink]="['/userDashBoard']"><button >OK</button></a>
+        </ng-template>
+    </div>
+</div>
+
+<div id="myModal1" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h1 style="margin-left: 20%;">Reschedule Ticket</h1>
+
+        <span *ngIf="(dt.dirty||dt.touched)" style='color:rgb(8, 55, 56);'>
+          <span style="margin-left: 9%;" *ngIf="dt.errors?.required">Travel date is required</span></span><br>
+        <mat-form-field class="dt">
+            <input matInput [matDatepicker]="picker" [min]="minDate" placeholder="   CHOOSE A DATE To Reschedule" name="dateOfJourney" required #dt="ngModel" [(ngModel)]=dateOfReschedule>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <br>
+        <button type="button" (click)="changeSeats()">Change Seats</button>
+
+    </div>
+</div>
+
+
+<div style="margin-top:150px ;"></div>
